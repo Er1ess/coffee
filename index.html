@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coffee Opt — Інтернет-магазин кави та спецій</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            yellow: '#F5A623', 
+                            yellowHover: '#E09612',
+                            dark: '#2A2A2A',
+                            light: '#F9F9F9'
+                        }
+                    },
+                    screens: {
+                        'xs': '400px', // Дополнительный брейкпоинт для совсем маленьких телефонов
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Гарантия видимости текста в Hero на мобильных */
+        #hero-text {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+        }
+        @media (min-width: 768px) {
+            #hero-text {
+                background-color: transparent;
+                backdrop-filter: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800 antialiased selection:bg-brand-yellow selection:text-white relative">
+
+    <div class="bg-brand-dark text-white text-xs py-2.5 px-4 hidden md:block">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex space-x-6">
+                <a href="#shipping" class="hover:text-brand-yellow transition-colors duration-300">Доставка та оплата</a>
+                <a href="#about" class="hover:text-brand-yellow transition-colors duration-300">Про нас</a>
+                <a href="#reviews" class="hover:text-brand-yellow transition-colors duration-300">Відгуки</a>
+            </div>
+            <div class="flex space-x-6 items-center">
+                <a href="tel:+380991234567" class="hover:text-brand-yellow transition-colors duration-300 flex items-center gap-1 font-bold">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+                    +38 (099) 123-45-67
+                </a>
+                <span>Працюємо: 10:00 - 18:00</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
+            <a href="#" class="text-xl md:text-2xl font-black text-gray-900 tracking-wider hover:scale-105 transition-transform duration-300">
+                COFFEE<span class="text-brand-yellow">-OPT</span>
+            </a>
+
+            <nav class="hidden md:flex space-x-8 font-bold text-sm uppercase tracking-wider">
+                <a href="#catalog" class="hover:text-brand-yellow transition duration-300">Каталог</a>
+                <a href="#hits" class="hover:text-brand-yellow transition duration-300">Хіти</a>
+                <a href="#reviews" class="hover:text-brand-yellow transition duration-300">Відгуки</a>
+                <a href="#about" class="hover:text-brand-yellow transition duration-300">Про нас</a>
+            </nav>
+
+            <div class="flex items-center space-x-2 md:space-x-4 relative z-10">
+                <button onclick="toggleCart()" class="text-gray-600 hover:text-brand-yellow hover:-translate-y-1 transition-all duration-300 relative p-3">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <span id="header-cart-count" class="absolute top-1 right-1 bg-brand-yellow text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-md">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative bg-white overflow-hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-stretch min-h-[450px] md:min-h-[500px]">
+            <div id="hero-text" class="md:w-1/2 p-6 md:p-16 flex flex-col justify-center relative z-10 rounded-b-3xl md:rounded-none">
+                <h1 class="text-3xl md:text-5xl font-black text-gray-900 leading-tight mb-5 md:mb-6 tracking-tight">
+                    Продаж <span class="text-brand-yellow">смачної та якісної</span> кави, спецій та прянощів
+                </h1>
+                <p class="text-gray-600 mb-8 max-w-md text-base md:text-lg">
+                    В наявності є різні види кави, свіжі сухофрукти, горіхи, а також вас приємно здивують наші приправи та спеції.
+                </p>
+                <div>
+                    <a href="#catalog" class="inline-block bg-brand-yellow hover:bg-brand-yellowHover text-white font-bold py-3.5 px-7 md:py-4 md:px-8 rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-sm md:text-base">
+                        Перейти до каталогу
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 absolute md:relative inset-0 opacity-10 md:opacity-100 z-0 h-full md:h-auto">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1000" alt="Кава" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-transparent hidden md:block"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mx-auto px-4 -mt-10 md:-mt-12 relative z-20 mb-12 md:mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+            <div class="bg-white p-7 md:p-8 shadow-lg border border-gray-100 relative overflow-hidden group hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 cursor-pointer rounded-2xl">
+                <div class="absolute -right-4 -top-8 text-9xl font-bold text-gray-100 opacity-80 group-hover:text-brand-yellow/10 transition-colors duration-300 pointer-events-none">1</div>
+                <div class="w-12 h-12 mb-4 text-brand-yellow relative z-10">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 relative z-10">Вигідні ціни</h3>
+                <p class="text-gray-600 relative z-10 text-sm">Низькі ціни, працюємо напряму з виробником</p>
+            </div>
+            <div class="bg-white p-7 md:p-8 shadow-lg border-2 border-brand-yellow/30 relative overflow-hidden group hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 cursor-pointer rounded-2xl">
+                <div class="absolute -right-4 -top-8 text-9xl font-bold text-gray-100 opacity-80 group-hover:text-brand-yellow/10 transition-colors duration-300 pointer-events-none">2</div>
+                <div class="w-12 h-12 mb-4 text-brand-yellow relative z-10">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 relative z-10 text-brand-yellow">Найкраща якість</h3>
+                <p class="text-brand-yellow/80 relative z-10 text-sm">Пропонуємо нашим клієнтам тільки якісну продукцію</p>
+            </div>
+            <div class="bg-white p-7 md:p-8 shadow-lg border border-gray-100 relative overflow-hidden group hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 cursor-pointer rounded-2xl">
+                <div class="absolute -right-4 -top-8 text-9xl font-bold text-gray-100 opacity-80 group-hover:text-brand-yellow/10 transition-colors duration-300 pointer-events-none">3</div>
+                <div class="w-12 h-12 mb-4 text-brand-yellow relative z-10">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 relative z-10">Швидкий сервіс</h3>
+                <p class="text-gray-600 relative z-10 text-sm">Доставляємо в усі регіони України тільки перевіреним перевізником</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalog" class="container mx-auto px-4 py-8 md:py-12">
+        <div class="mb-8 md:mb-10 pl-4 border-l-4 border-brand-yellow">
+            <h2 class="text-2xl md:text-3xl font-black text-gray-900 leading-tight">Ми пропонуємо<br><span class="text-brand-yellow">широкий асортимент</span><br>якісних товарів</h2>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            <a href="#hits" class="group block relative overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 rounded-xl">
+                <div class="h-40 xs:h-48 md:h-64 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1596160161404-54c7d0d6118d?q=80&w=600" alt="Зернова кава" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="p-3.5 md:p-4 bg-white relative z-10 group-hover:-translate-y-1.5 transition-transform duration-300">
+                    <h3 class="font-bold text-base md:text-lg text-gray-800">Зернова кава</h3>
+                </div>
+            </a>
+            <a href="#hits" class="group block relative overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 rounded-xl">
+                <div class="h-40 xs:h-48 md:h-64 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=600" alt="Розчинна кава" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="p-3.5 md:p-4 bg-white relative z-10 group-hover:-translate-y-1.5 transition-transform duration-300">
+                    <h3 class="font-bold text-base md:text-lg text-gray-800">Розчинна кава</h3>
+                </div>
+            </a>
+            <a href="#hits" class="group block relative overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 rounded-xl">
+                <div class="h-40 xs:h-48 md:h-64 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=600" alt="Спеції" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="p-3.5 md:p-4 bg-white relative z-10 group-hover:-translate-y-1.5 transition-transform duration-300">
+                    <h3 class="font-bold text-base md:text-lg text-gray-800">Спеції та прянощі</h3>
+                </div>
+            </a>
+             <a href="#hits" class="group block relative overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 rounded-xl">
+                <div class="h-40 xs:h-48 md:h-64 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1534119396591-5998e1249810?q=80&w=600" alt="Горіхи" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="p-3.5 md:p-4 bg-white relative z-10 group-hover:-translate-y-1.5 transition-transform duration-300">
+                    <h3 class="font-bold text-base md:text-lg text-gray-800">Горіхи та сухофрукти</h3>
+                </div>
+            </a>
+             <a href="#hits" class="group block relative overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 rounded-xl">
+                <div class="h-40 xs:h-48 md:h-64 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=600" alt="Випічка" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="p-3.5 md:p-4 bg-white relative z-10 group-hover:-translate-y-1.5 transition-transform duration-300">
+                    <h3 class="font-bold text-base md:text-lg text-gray-800">Для випічки та десертів</h3>
+                </div>
+            </a>
+            <a href="#hits" class="group block relative overflow-hidden bg-brand-yellow shadow-sm hover:shadow-xl transition-all duration-500 border border-brand-yellow flex flex-col justify-center items-center h-40 xs:h-48 md:h-full min-h-[160px] md:min-h-[250px] rounded-xl text-center p-4">
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-full flex items-center justify-center mb-3 group-hover:scale-125 transition-transform duration-500">
+                    <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </div>
+                <h3 class="font-bold text-base md:text-xl text-white">Весь каталог</h3>
+            </a>
+        </div>
+    </section>
+
+    <section id="hits" class="container mx-auto px-4 py-8 md:py-12">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 border-b-2 border-brand-yellow inline-block pb-1.5">Хіти продажу</h2>
+        
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 md:gap-5">
+            <div class="bg-white border border-gray-100 p-3 flex flex-col group hover:shadow-2xl transition-all duration-300 relative rounded-xl overflow-hidden">
+                <div class="absolute top-2 left-2 z-10 bg-red-500 text-white px-2 py-0.5 text-xs font-bold rounded">-42% 👑</div>
+                <div class="relative overflow-hidden mb-3 bg-gray-50 flex justify-center h-40 md:h-64 items-center rounded-lg">
+                    <img src="https://images.unsplash.com/photo-1521406560938-1a52e9894e63?w=400&h=400&q=80" class="h-full w-full object-cover group-hover:scale-110 transition duration-500" alt="Jacobs">
+                </div>
+                <h3 class="text-sm text-gray-800 mb-2 h-10 overflow-hidden group-hover:text-brand-yellow transition-colors leading-tight font-medium">Розчинна кава Jacobs Monarch 400г (Пакет)</h3>
+                <div class="text-[11px] text-green-600 mb-2 font-medium">В наявності</div>
+                <div class="mt-auto flex justify-between items-end mb-3 space-x-1">
+                    <div>
+                        <span class="text-lg font-bold text-red-500">220 ₴</span>
+                        <span class="text-xs text-gray-400 line-through block">380 ₴</span>
+                    </div>
+                </div>
+                <button onclick="addToCart('jacobs-400', 'Розчинна кава Jacobs Monarch 400г', 220, 'https://images.unsplash.com/photo-1521406560938-1a52e9894e63?w=400')" class="w-full bg-brand-yellow hover:bg-brand-yellowHover text-white font-bold py-2 px-4 transition duration-300 active:scale-95 text-xs md:text-sm rounded">
+                    Купити
+                </button>
+            </div>
+
+            <div class="bg-white border border-gray-100 p-3 flex flex-col group hover:shadow-2xl transition-all duration-300 relative rounded-xl overflow-hidden">
+                 <div class="absolute top-2 left-2 z-10 bg-white/90 px-2 py-0.5 text-xs font-bold border border-gray-200 rounded">Топ 👑</div>
+                <div class="relative overflow-hidden mb-3 bg-gray-50 flex justify-center h-40 md:h-64 items-center rounded-lg">
+                    <img src="https://images.unsplash.com/photo-1610912182068-d0694e9f7833?w=400&h=400&q=80" class="h-full w-full object-cover group-hover:scale-110 transition duration-500" alt="Lavazza">
+                </div>
+                <h3 class="text-sm text-gray-800 mb-2 h-10 overflow-hidden group-hover:text-brand-yellow transition-colors leading-tight font-medium">Кава в зернах Lavazza Qualita Oro 1 кг</h3>
+                <div class="text-[11px] text-green-600 mb-2 font-medium">В наявності</div>
+                <div class="mt-auto flex justify-between items-end mb-3 space-x-1">
+                    <div>
+                        <span class="text-lg font-bold text-gray-900">695 ₴</span>
+                    </div>
+                </div>
+                <button onclick="addToCart('lavazza-1kg', 'Кава в зернах Lavazza Qualita Oro 1 кг', 695, 'https://images.unsplash.com/photo-1610912182068-d0694e9f7833?w=400')" class="w-full bg-brand-yellow hover:bg-brand-yellowHover text-white font-bold py-2 px-4 transition duration-300 active:scale-95 text-xs md:text-sm rounded">
+                    Купити
+                </button>
+            </div>
+
+             <div class="bg-white border border-gray-100 p-3 flex flex-col group hover:shadow-2xl transition-all duration-300 relative rounded-xl overflow-hidden">
+                <div class="absolute top-2 left-2 z-10 bg-red-500 text-white px-2 py-0.5 text-xs font-bold rounded">-20% 🔥</div>
+                <div class="relative overflow-hidden mb-3 bg-gray-50 flex justify-center h-40 md:h-64 items-center rounded-lg">
+                    <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=400&q=80" class="h-full w-full object-cover group-hover:scale-110 transition duration-500" alt="Спеції">
+                </div>
+                <h3 class="text-sm text-gray-800 mb-2 h-10 overflow-hidden group-hover:text-brand-yellow transition-colors leading-tight font-medium">Набір фірмових спецій для кави (5 видів)</h3>
+                <div class="text-[11px] text-green-600 mb-2 font-medium">В наявності</div>
+                <div class="mt-auto flex justify-between items-end mb-3 space-x-1">
+                    <div>
+                        <span class="text-lg font-bold text-red-500">180 ₴</span>
+                        <span class="text-xs text-gray-400 line-through block">225 ₴</span>
+                    </div>
+                </div>
+                <button onclick="addToCart('spices-set', 'Набір фірмових спецій для кави', 180, 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400')" class="w-full bg-brand-yellow hover:bg-brand-yellowHover text-white font-bold py-2 px-4 transition duration-300 active:scale-95 text-xs md:text-sm rounded">
+                    Купити
+                </button>
+            </div>
+            
+            <div class="bg-white border border-gray-100 p-3 flex flex-col group hover:shadow-2xl transition-all duration-300 relative rounded-xl overflow-hidden">
+                <div class="relative overflow-hidden mb-3 bg-gray-50 flex justify-center h-40 md:h-64 items-center rounded-lg">
+                    <img src="https://images.unsplash.com/photo-1534119396591-5998e1249810?w=400&h=400&q=80" class="h-full w-full object-cover group-hover:scale-110 transition duration-500" alt="Горіхи">
+                </div>
+                <h3 class="text-sm text-gray-800 mb-2 h-10 overflow-hidden group-hover:text-brand-yellow transition-colors leading-tight font-medium">Фісташки Premium смажені солоні 500г</h3>
+                <div class="text-[11px] text-green-600 mb-2 font-medium">В наявності</div>
+                <div class="mt-auto flex justify-between items-end mb-3 space-x-1">
+                    <div>
+                        <span class="text-lg font-bold text-gray-900">410 ₴</span>
+                    </div>
+                </div>
+                <button onclick="addToCart('almonds-500g', 'Фісташки Premium смажені 500г', 410, 'https://images.unsplash.com/photo-1534119396591-5998e1249810?w=400')" class="w-full bg-brand-yellow hover:bg-brand-yellowHover text-white font-bold py-2 px-4 transition duration-300 active:scale-95 text-xs md:text-sm rounded">
+                    Купити
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="py-12 md:py-16 bg-gray-50 border-t border-b border-gray-200 mt-8 md:mt-10">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row space-y-8 md:space-y-0">
+            <div class="md:w-1/2 relative bg-brand-yellow/90 md:-ml-8 rounded-3xl overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1517256064527-09c53b2d0c6b?q=80&w=800" alt="Клієнт" class="w-full h-64 xs:h-80 md:h-full object-cover mix-blend-multiply opacity-80 group-hover:scale-105 transition duration-500">
+            </div>
+            <div class="md:w-1/2 md:p-16 flex flex-col justify-center relative z-10">
+                <h2 class="text-2xl md:text-3xl font-black text-gray-900 leading-tight mb-8">
+                    Що говорять <span class="text-brand-yellow">клієнти</span><br>про наші товари та магазин
+                </h2>
+                
+                <div class="space-y-6">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex items-center text-brand-yellow text-sm mb-2">
+                            ★★★★★ <span class="text-gray-800 font-bold ml-2 text-xs">Марина (м. Київ)</span>
+                        </div>
+                        <p class="text-sm text-gray-600 italic leading-relaxed">"Задоволена співпрацею. Швидко зв'язалися та швидко відправили. Повна відповідність опису продукції, кава чудова!"</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex items-center text-brand-yellow text-sm mb-2">
+                            ★★★★★ <span class="text-gray-800 font-bold ml-2 text-xs">Олександр (Одеса)</span>
+                        </div>
+                        <p class="text-sm text-gray-600 italic leading-relaxed">"Кава свіжа, аромат неймовірний! Спеції теж чудової якості. Будемо замовляти оптом постійно."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container mx-auto px-4 py-12 md:py-16 text-sm text-gray-600 leading-relaxed max-w-5xl">
+        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-5 border-b-2 border-brand-yellow inline-block pb-1.5">Про інтернет-магазин Coffee Opt</h3>
+        <p class="mb-4">
+            Ласкаво просимо в інтернет-магазин Coffee Opt - ваш надійний постачальник розчинної та зернової кави, спецій, прянощів, горіхів та сухофруктів оптом і в роздріб. Підбираючи асортимент товару, ми орієнтуємося насамперед на якість та свіжість, щоб задовольнити потреби найвибагливіших гурманів та забезпечити стабільні поставки для вашого бізнесу чи дому.
+        </p>
+        <p class="mb-4">
+            Поки інші ходять по магазинах і штовхаються у чергах у пошуку потрібних інгредієнтів, ви можете оформити замовлення всього в кілька кліків, сидячи вдома чи на робочому місці. Наші менеджери миттєво обробляють замовлення та готують їх до швидкої доставки по всій Україні за допомогою Нової Пошти чи Укрпошти.
+        </p>
+    </section>
+
+    <footer id="shipping" class="bg-[#2A2A2A] text-gray-300 py-12 px-4 text-sm border-t-4 border-brand-yellow mt-10">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8">
+            <div>
+                <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-wider">Меню</h4>
+                <ul class="space-y-2.5">
+                    <li><a href="#about" class="hover:text-brand-yellow transition-colors flex items-center gap-2 text-gray-400">Про нас</a></li>
+                    <li><a href="#catalog" class="hover:text-brand-yellow transition-colors flex items-center gap-2 text-gray-400">Каталог товарів</a></li>
+                    <li><a href="#reviews" class="hover:text-brand-yellow transition-colors flex items-center gap-2 text-gray-400">Відгуки</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-wider">Умови співпраці</h4>
+                <p class="text-gray-400 text-xs leading-relaxed mb-3">Доставка здійснюється Новою Поштою або Укрпоштою по всій території України.</p>
+                <p class="text-gray-400 text-xs leading-relaxed">Оплата можлива на карту, за безготівковим розрахунком (для ФОП/ТОВ) або післяплатою (наложений платіж).</p>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-wider">Зв'язок</h4>
+                <ul class="space-y-3 mb-5 text-gray-100">
+                    <li class="flex items-center gap-2.5 font-medium">+38 (099) 123-45-67</li>
+                    <li><a href="https://t.me/yourtelegram" target="_blank" class="text-sky-400 hover:text-sky-300 flex items-center gap-2"> <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.12 7.14-.14.72-.4 1.15-.65 1.17-.56.05-.98-.37-1.52-.72-.85-.56-1.32-.91-2.15-1.46-.95-.63-.33-.97.21-1.52.14-.14 2.56-2.35 2.61-2.56.01-.03.01-.14-.06-.2-.07-.06-.17-.04-.24-.03-.1.01-1.7 1.07-4.8 3.15-.45.3-.87.45-1.25.44-.42-.01-1.22-.24-1.41-.43-.72-.24-1.28-.37-1.23-.79.03-.22.33-.44.9-.68 3.52-1.53 5.86-2.54 7.03-3.03 3.35-1.4 4.05-1.64 4.51-1.65.1.01.32.03.46.15.13.11.16.27.16.39zm-1.07.13"></path></svg> Написати в Telegram</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-wider">Графік роботи</h4>
+                <div class="text-gray-100 font-medium">
+                    <p>Понеділок - Субота</p>
+                    <p class="text-xl font-bold text-white">10:00 - 18:00</p>
+                    <p class="mt-1 text-xs opacity-60 text-gray-400">Неділя — вихідний</p>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto text-center mt-12 pt-6 border-t border-gray-700 text-gray-600 text-xs">
+            © Coffee Opt. Усі права захищено.
+        </div>
+    </footer>
+
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/60 z-40 hidden transition-opacity duration-300"></div>
+    
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-sm sm:max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-5 bg-brand-dark text-white flex justify-between items-center">
+            <h3 class="text-lg font-bold uppercase tracking-wider text-white">Мій кошик</h3>
+            <button onclick="toggleCart()" class="text-brand-yellow hover:text-white text-3xl font-bold transition p-2">&times;</button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto p-5 md:p-6 space-y-5 scrollbar-hide">
+            <p class="text-gray-500 text-center py-8 italic">Ваш кошик порожній</p>
+        </div>
+        
+        <div class="p-5 md:p-6 border-t border-gray-100 bg-gray-50 rounded-t-2xl shadow-inner">
+            <div class="flex justify-between items-center text-lg font-black text-gray-900 mb-5">
+                <span>Всього:</span>
+                <span id="cart-total-price" class="text-brand-yellow text-2xl">0 ₴</span>
+            </div>
+            <button onclick="checkoutToTelegram()" class="w-full bg-brand-yellow hover:bg-brand-yellowHover text-white font-black py-4 px-6 uppercase tracking-widest transition duration-300 shadow-md rounded-xl text-sm md:text-base">
+                Оформити замовлення
+            </button>
+        </div>
+    </div>
+
+    <div class="fixed bottom-5 right-5 z-30 flex flex-col space-y-3 items-end">
+        <a href="#" class="w-11 h-11 bg-gray-800/90 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-700 transition-all duration-300 hover:-translate-y-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+        </a>
+        <a href="https://t.me/yourtelegram" target="_blank" class="w-14 h-14 md:w-16 md:h-16 bg-brand-yellow text-white rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(245,166,35,0.4)] hover:scale-110 transition-all duration-300 relative">
+            <span class="absolute inset-0 rounded-full bg-brand-yellow animate-ping opacity-30"></span>
+            <svg class="w-6 h-6 md:w-8 md:h-8 relative z-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.12 7.14-.14.72-.4 1.15-.65 1.17-.56.05-.98-.37-1.52-.72-.85-.56-1.32-.91-2.15-1.46-.95-.63-.33-.97.21-1.52.14-.14 2.56-2.35 2.61-2.56.01-.03.01-.14-.06-.2-.07-.06-.17-.04-.24-.03-.1.01-1.7 1.07-4.8 3.15-.45.3-.87.45-1.25.44-.42-.01-1.22-.24-1.41-.43-.72-.24-1.28-.37-1.23-.79.03-.22.33-.44.9-.68 3.52-1.53 5.86-2.54 7.03-3.03 3.35-1.4 4.05-1.64 4.51-1.65.1.01.32.03.46.15.13.11.16.27.16.39zm-1.07.13"></path></svg>
+        </a>
+    </div>
+
+    <script>
+        let cart = [];
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            
+            sidebar.classList.toggle('translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        function addToCart(id, name, price, img) {
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, name, price, img, quantity: 1 });
+            }
+            
+            updateCartUI();
+        }
+
+        function changeQuantity(id, delta) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        function removeItem(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const headerCountBadge = document.getElementById('header-cart-count');
+            const totalPriceElement = document.getElementById('cart-total-price');
+            
+            cartItemsContainer.innerHTML = '';
+            
+            let totalCount = 0;
+            let totalPrice = 0;
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `<p class="text-gray-500 text-center py-8 italic">Ваш кошик порожній</p>`;
+            } else {
+                cart.forEach(item => {
+                    totalCount += item.quantity;
+                    totalPrice += item.price * item.quantity;
+                    
+                    cartItemsContainer.innerHTML += `
+                        <div class="flex items-center justify-between border-b border-gray-100 pb-4 space-x-3">
+                            <img src="${item.img}" class="w-14 h-14 object-cover rounded-md flex-shrink-0" alt="${item.name}">
+                            <div class="flex-1 ml-3">
+                                <h4 class="text-xs md:text-sm font-bold text-gray-800 line-clamp-1">${item.name}</h4>
+                                <p class="text-xs text-brand-yellow font-black mt-1">${item.price} ₴</p>
+                                <div class="flex items-center space-x-2.5 mt-2">
+                                    <button onclick="changeQuantity('${item.id}', -1)" class="w-7 h-7 bg-gray-100 text-gray-800 rounded-lg flex items-center justify-center font-bold text-xs hover:bg-gray-200">-</button>
+                                    <span class="text-sm font-black text-gray-800">${item.quantity}</span>
+                                    <button onclick="changeQuantity('${item.id}', 1)" class="w-7 h-7 bg-gray-100 text-gray-800 rounded-lg flex items-center justify-center font-bold text-xs hover:bg-gray-200">+</button>
+                                </div>
+                            </div>
+                            <button onclick="removeItem('${item.id}')" class="text-gray-400 hover:text-red-500 ml-2 text-xl p-1.5 font-bold">&times;</button>
+                        </div>
+                    `;
+                });
+            }
+            
+            headerCountBadge.innerText = totalCount;
+            totalPriceElement.innerText = totalPrice + ' ₴';
+        }
+
+        function checkoutToTelegram() {
+            if (cart.length === 0) {
+                alert("Кошик порожній!");
+                return;
+            }
+            
+            let message = "Доброго дня! Бажаю оформити замовлення:\n\n";
+            cart.forEach(item => {
+                message += `• ${item.name} — ${item.quantity}шт. (${item.price * item.quantity} ₴)\n`;
+            });
+            message += `\nРазом: ${document.getElementById('cart-total-price').innerText}`;
+            
+            // ТУТ ВСТАВЬ СВОЙ НИКНЕЙМ ТЕЛЕГРАМ
+            const telegramUrl = `https://t.me/yourtelegram?text=${encodeURIComponent(message)}`;
+            window.open(telegramUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
